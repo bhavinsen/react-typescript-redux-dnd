@@ -1,46 +1,14 @@
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { DragableTypes, nodeTypes } from "../TypeDefination";
+import { Droppable } from "react-beautiful-dnd";
+import { DragableTypes, taskType } from "../TypeDefination";
+import Draggable from "../Draggable/index";
 
-
-
-const Dragable = ({ columnId, column }: DragableTypes) => {
+const Dragable = ({ uid, cardData }: DragableTypes) => {
     return (
-        <Droppable droppableId={columnId} key={columnId}>
+        <Droppable droppableId={uid} key={uid}>
             {(provided, snapshot) => {
                 return (
-                    <div {...provided.droppableProps} ref={provided.innerRef} style={{ background: snapshot.isDraggingOver ? "lightblue" : "lightgrey", padding: 4, width: 250, minHeight: 500 }}>
-                        {column.items.map((item: nodeTypes, index: Number | any) => {
-                            return (
-                                <Draggable
-                                    key={item.id}
-                                    draggableId={item.id}
-                                    index={index}
-                                >
-                                    {(provided, snapshot) => {
-                                        return (
-                                            <div
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                style={{
-                                                    userSelect: "none",
-                                                    padding: 16,
-                                                    margin: "0 0 8px 0",
-                                                    minHeight: "50px",
-                                                    backgroundColor: snapshot.isDragging
-                                                        ? "#263B4A"
-                                                        : "#456C86",
-                                                    color: "white",
-                                                    ...provided.draggableProps.style
-                                                }}
-                                            >
-                                                {item.content}
-                                            </div>
-                                        );
-                                    }}
-                                </Draggable>
-                            );
-                        })}
+                    <div {...provided.droppableProps} ref={provided.innerRef} style={{ background: snapshot.isDraggingOver ? "#83abc6" : "lightgrey", padding: 4, width: 350, minHeight: 500, boxShadow: "0px 0px 10px #e7e2e2" }}>
+                        {cardData.tasks.map((item: taskType, index: Number | any) => <Draggable item={item} index={index} />)}
                         {provided.placeholder}
                     </div>
                 );
